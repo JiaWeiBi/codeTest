@@ -43,7 +43,8 @@ This blocklet is a static project, which means this is a frontend application. I
 
 3. Go to the project directory `cd [name]`
 4. Install dependencies: `npm install` or `yarn`
-5. Start development server: `blocklet dev`
+5. Change .env proxy config to your own if necessary
+6. Start development server: `blocklet dev`
 
 ## Bundle
 

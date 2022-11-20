@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    mocha: true,
   },
   extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'plugin:prettier/recommended'],
   globals: {
@@ -21,5 +22,6 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
   },
 };

@@ -6,6 +6,7 @@ const express = require('express');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const fallback = require('express-history-api-fallback');
+const Joi = require('joi');
 
 const { name, version } = require('../package.json');
 const logger = require('./libs/logger');
@@ -22,6 +23,22 @@ const router = express.Router();
 router.use('/api', require('./routes'));
 app.use(router);
 
+// eslint-disable-line no-unused-vars
+app.use(function (err, req, res, next) {
+  // Joi 参数校验失败
+  if (err instanceof Joi.ValidationError) {
+    return res.json({
+      status: 0,
+      message: err.message,
+    });
+  }
+  //未知错误
+  res.json({
+    status: 0,
+    message: err.message,
+  });
+});
+
 const isProduction = process.env.NODE_ENV === 'production' || process.env.ABT_NODE_SERVICE_ENV === 'production';
 
 if (isProduction) {
@@ -36,7 +53,7 @@ if (isProduction) {
   });
 }
 
-const port = parseInt(process.env.BLOCKLET_PORT, 10);
+const port = parseInt(process.env.BLOCKLET_PORT || 8090, 10);
 
 const server = app.listen(port, (err) => {
   if (err) throw err;
